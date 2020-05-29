@@ -59,6 +59,11 @@ kotlin {
             }
         }
     }
+    js {
+        browser {
+            useCommonJs()
+        }
+    }
 
     ios() {
         compilations {
@@ -126,6 +131,14 @@ kotlin {
                 api(kotlin("stdlib"))
                 api(deps.mparticle.androidSdk)
                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${versions.serialization}")
+            }
+        }
+
+        val jsMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${versions.serialization}")
             }
         }
     }

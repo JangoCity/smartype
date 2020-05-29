@@ -23,6 +23,9 @@ version = VERSION_NAME
 
 kotlin {
 
+    js {
+        browser { }
+    }
     jvm()
     android("android") {
         publishLibraryVariants("release")
@@ -95,6 +98,14 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${versions.serialization}")
             }
         }
+        val jsMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${versions.serialization}")
+            }
+        }
+
         val iosMain by getting {
             dependsOn(commonMain)
             dependencies {

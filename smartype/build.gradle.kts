@@ -26,6 +26,13 @@ val mparticleDir = "$projectDir/../smartype-receivers/smartype-mparticle"
 val carthageBuildDir = "$mparticleDir/Carthage/Build/iOS"
 
 kotlin {
+
+    if (project.hasProperty("buildJs")) {
+        js {
+            browser { }
+        }
+    }
+
     android() {
         publishLibraryVariants("release", "debug")
         mavenPublication {
@@ -119,6 +126,17 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${versions.serialization}")
             }
         }
+
+        try {
+            val jsMain by getting
+            if (jsMain != null) {
+                jsMain.dependsOn(commonMain)
+                jsMain.dependencies {
+                    api(kotlin("stdlib-js"))
+                    api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${versions.serialization}")
+                }
+            }
+        }catch (e: kotlin.Exception){}
 
         try {
             val iosX64Main by getting {

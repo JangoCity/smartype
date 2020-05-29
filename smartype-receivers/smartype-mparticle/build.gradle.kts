@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetPreset
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackOutput.Target.COMMONJS
 
 plugins {
     kotlin("multiplatform")
@@ -61,7 +62,13 @@ kotlin {
     }
     js {
         browser {
-            useCommonJs()
+
+            webpackTask{
+                output.libraryTarget = COMMONJS
+            }
+            dceTask {
+                keep("smartype-mparticle.com.mparticle.smartype.api.receivers.mparticle.MParticleReceiver")
+            }
         }
     }
 

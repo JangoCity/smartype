@@ -8,7 +8,7 @@ plugins {
 
 spotless {
     kotlin {
-        target("**/*.kt")
+        target("**/*.kt", "!**/SmartypeObject.kt")
         trimTrailingWhitespace()
         endWithNewline()
     }
